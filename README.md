@@ -44,25 +44,25 @@ turn on diagnostics and toggle off features.
 # Mappings
 The following mappings are available. 
 
-<Plug>(toggle-lsp-diag-underline)
+`<Plug>(toggle-lsp-diag-underline)`
 Toggle underlining diagnostic information.
 
-<Plug>(toggle-lsp-diag-signs)
+`<Plug>(toggle-lsp-diag-signs)`
 Toggle displaying signs in the sign column.
 
-<Plug>(toggle-lsp-diag-vtext)
+`<Plug>(toggle-lsp-diag-vtext)`
 Toggle displaying virtual text in your code.
 
-<Plug>(toggle-lsp-diag-update_in_insert)
+`<Plug>(toggle-lsp-diag-update_in_insert)`
 Toggle updating diagnostic information while in insert mode.
 
-<Plug>(toggle-lsp-diag) 
+`<Plug>(toggle-lsp-diag)`
 Toggle all diagnostics. Turn them all off / on
 
-<Plug>(toggle-lsp-diag-on)
+`<Plug>(toggle-lsp-diag-on)`
 Turn all diagnostics on.
 
-<Plug>(toggle-lsp-diag-off) 
+`<Plug>(toggle-lsp-diag-off)`
 Turn all diagnostics off.
 
 An example configuration:
@@ -80,11 +80,11 @@ nmap <leader>tldf <Plug>(toggle-lsp-diag-on)
 # Commands
 The following commands are available:
 
-:ToggleDiag
+`:ToggleDiag`
 Toggle all diagnostics on/off
 
-:ToggleDiagOn
+`:ToggleDiagOn`
 Turn ALL diagnostics on.
 
-:ToggleDiagOff
+`:ToggleDiagOff`
 Turn ALL diagnostics off.
