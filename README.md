@@ -9,7 +9,7 @@ Neovim >= 0.5.0
 Install using your favorite plugin manager. 
 
 If you use vim-plug:
-```
+```vim
 Plug 'WhoIsSethDaniel/toggle-lsp-diagnostics.nvim'
 ```
 Or if you use Vim 8 style packages:
@@ -20,11 +20,11 @@ git clone https://github.com/WhoIsSethDaniel/toggle-lsp-diagnostics.nvim
 
 # Configuration
 Somwhere in your config you should have this:
-```
+```lua
 require'toggle_lsp_diagnostics'.init()
 ```
 If you are using Vimscript for configuration:
-```
+```vim
 lua <<EOF
 require'toggle_lsp_diagnostics'.init()
 EOF
@@ -66,7 +66,7 @@ Turn all diagnostics on.
 Turn all diagnostics off.
 
 An example configuration:
-```
+```vim
 nmap <leader>tlu <Plug>(toggle-lsp-diag-underline)
 nmap <leader>tls <Plug>(toggle-lsp-diag-signs)
 nmap <leader>tlv <Plug>(toggle-lsp-diag-vtext)
