@@ -43,6 +43,10 @@ the individual feature toggling. Turning all diagnostics off will turn all diagn
 regardless of state. You cannot then individually turn on diagnostic features. You must 
 turn on diagnostics and toggle off features.
 
+By default *all* of the features are turned on. This means that signs, underlining, virtual 
+text, and update in insert are turned on. This is contrary to the Neovim default which has
+update in insert turned off by default.
+
 # Mappings
 The following mappings are available. 
 
