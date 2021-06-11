@@ -2,7 +2,7 @@
 A Neovim plugin for toggling the LSP diagnostics. Turn all diagnostics on/off or turn on/off
 individual features of diagnostics (virtual text, underline, signs, etc...).
 
-<img src="https://github.com/WhoIsSethDaniel/public-assets/blob/main/toggle-diag-onoff-2.gif">
+<img src="https://github.com/WhoIsSethDaniel/public-assets/blob/main/toggle-diag-on-off-2.gif">
 
 # Compatibility
 Neovim >= 0.5.0
