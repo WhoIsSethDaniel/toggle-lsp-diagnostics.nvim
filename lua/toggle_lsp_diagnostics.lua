@@ -39,11 +39,13 @@ function M.turn_off_diagnostics()
     update_in_insert = false
   })
   M.settings.all = false
+  M.display_status('all diagnostics are', false)
 end
 
 function M.turn_on_diagnostics()
   M.configure_diagnostics(M.current_settings({}))
   M.settings.all = true
+  M.display_status('all diagnostics are', true)
 end
 
 function M.toggle_diagnostics()
@@ -55,7 +57,11 @@ function M.toggle_diagnostics()
 end
 
 function M.toggle_diagnostic(name)
+  if M.settings.all == false then
+    return
+  end
   M.settings[name].value = not M.settings[name].value
+  M.display_status(name .. ' is', M.settings[name].value)
   M.configure_diagnostics({ [name] = M.settings[name].value })
   return M.settings[name].value
 end
@@ -83,6 +89,14 @@ function M.configure_diagnostics(settings)
     for client_id, _ in pairs(vim.lsp.buf_get_clients(buffer_id)) do
       diagnostic.display(nil, buffer_id, client_id, conf)
     end
+  end
+end
+
+function M.display_status(msg, val)
+  if val == true then
+    print(string.format("%s on", msg))
+  else
+    print(string.format("%s off", msg))
   end
 end
 

@@ -38,10 +38,10 @@ all buffers / clients both now and in the future. When you turn diagnostics back
 same applies.
 
 If you toggle off certain features, such as signs, this does not mean that it will turn 
-back on if you toggle all diagnostics to on. The global on toggling is separate from
+back on if you toggle all diagnostics to on. The 'global on' toggling is separate from
 the individual feature toggling. Turning all diagnostics off will turn all diagnostics off
 regardless of state. You cannot then individually turn on diagnostic features. You must 
-turn on diagnostics and toggle off features.
+turn on all diagnostics and toggle off features.
 
 By default *all* of the features are turned on. This means that signs, underlining, virtual 
 text, and update in insert are turned on. This is contrary to the Neovim default which has
