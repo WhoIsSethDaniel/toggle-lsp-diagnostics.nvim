@@ -1,20 +1,23 @@
 local diagnostic = require 'vim.lsp.diagnostic'
 
--- currently 'options' are unused by this module.
 local M = {
   settings = {
     all = true,
-    underline = { default = true, options = { severity_limit = 4 } },
-    virtual_text = { default = true, options = { severity_limit = 4 } },
-    signs = { default = true, options = { severity_limit = 4 } },
-    update_in_insert = { default = true, options = { severity_limit = 4 } }
+    underline = { default = true },
+    virtual_text = { default = true },
+    signs = { default = true },
+    update_in_insert = { default = true }
   }
 }
 
 local SETTABLE = { 'underline', 'virtual_text', 'signs', 'update_in_insert' }
 
-function M.init()
+function M.init(user_settings)
+  local user_settings = user_settings or {}
   for _, setting in ipairs(SETTABLE) do
+    if user_settings[setting] ~= nil then
+      M.settings[setting].default = user_settings[setting]
+    end
     M.settings[setting].value = M.settings[setting].default
   end
   M.configure_diagnostics()
@@ -58,9 +61,15 @@ end
 
 function M.toggle_diagnostic(name)
   if M.settings.all == false then
-    return
+    return false
   end
-  M.settings[name].value = not M.settings[name].value
+  if type(M.settings[name].default) == 'boolean' then
+    M.settings[name].value = not M.settings[name].value
+  elseif M.settings[name].value == false then
+    M.settings[name].value = M.settings[name].default
+  else
+    M.settings[name].value = false
+  end
   M.display_status(name .. ' is', M.settings[name].value)
   M.configure_diagnostics({ [name] = M.settings[name].value })
   return M.settings[name].value
@@ -93,10 +102,10 @@ function M.configure_diagnostics(settings)
 end
 
 function M.display_status(msg, val)
-  if val == true then
-    print(string.format("%s on", msg))
-  else
+  if val == false then
     print(string.format("%s off", msg))
+  else
+    print(string.format("%s on", msg))
   end
 end
 

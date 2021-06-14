@@ -31,6 +31,14 @@ lua <<EOF
 require'toggle_lsp_diagnostics'.init()
 EOF
 ```
+You can pass an initial configuration for each of the diagnostic settings:
+```lua
+require'toggle_lsp_diagnostics'.init({ underline = false, virtual_text = { prefix = "XXX", spacing = 5 }})
+```
+The above turns off underlining by default and configures the virtual text with a prefix of 'XXX' and five
+spaces prior to the virtual text being printed. The complete list of settings may be found in lsp help
+page. In particular, `:h set_virtual_text`, `:h set_underline`, `:h set_signs`, and `:h on_publish_diagnostics`.
+
 
 # Behavior
 The toggling is currently done globally. When you turn off all diagnostics you do so for
@@ -46,6 +54,9 @@ turn on all diagnostics and toggle off features.
 By default *all* of the features are turned on. This means that signs, underlining, virtual 
 text, and update in insert are turned on. This is contrary to the Neovim default which has
 update in insert turned off by default.
+
+You can change the settings by passing a configuration to the init() method (see the 'Configuration'
+section above).
 
 # Mappings
 The following mappings are available. 
