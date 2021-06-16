@@ -28,7 +28,7 @@ function M.current_settings(new_settings)
   for _, setting in pairs(SETTABLE) do
     settings[setting] = M.settings[setting].value
   end
-  for setting, value in pairs(new_settings) do
+  for setting, value in pairs(new_settings or {}) do
     settings[setting] = value
   end
   return settings
@@ -45,14 +45,29 @@ function M.turn_off_diagnostics()
   M.display_status('all diagnostics are', false)
 end
 
+function M.turn_on_diagnostics_default()
+  local settings = {}
+  for _, setting in ipairs(SETTABLE) do
+   settings[setting] = M.settings[setting].default
+  end
+  M.configure_diagnostics(settings)
+  M.settings.all = true
+  print('all diagnostics are at default')
+end
+
 function M.turn_on_diagnostics()
-  M.configure_diagnostics(M.current_settings({}))
+  M.configure_diagnostics({
+    underline = true,
+    virtual_text = true,
+    signs = true,
+    update_in_insert = true
+  })
   M.settings.all = true
   M.display_status('all diagnostics are', true)
 end
 
 function M.toggle_diagnostics()
-  if  M.settings.all then
+  if M.settings.all then
     M.turn_off_diagnostics()
   else
     M.turn_on_diagnostics()
@@ -60,9 +75,6 @@ function M.toggle_diagnostics()
 end
 
 function M.toggle_diagnostic(name)
-  if M.settings.all == false then
-    return false
-  end
   if type(M.settings[name].default) == 'boolean' then
     M.settings[name].value = not M.settings[name].value
   elseif M.settings[name].value == false then
@@ -92,10 +104,10 @@ function M.configure_diagnostics(settings)
   local conf = M.current_settings(settings or {})
   vim.lsp.handlers["textDocument/publishDiagnostics"] =
       vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, conf)
-  local buffers = vim.fn.getbufinfo()
-  for _, buffer in pairs(buffers) do
-    local buffer_id = buffer.bufnr
-    for client_id, _ in pairs(vim.lsp.buf_get_clients(buffer_id)) do
+  local clients = vim.lsp.get_active_clients()
+  for client_id, _ in pairs(clients) do
+    local buffers = vim.lsp.get_buffers_by_client_id(client_id)
+    for _, buffer_id in ipairs(buffers) do
       diagnostic.display(nil, buffer_id, client_id, conf)
     end
   end

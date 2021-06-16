@@ -45,18 +45,18 @@ The toggling is currently done globally. When you turn off all diagnostics you d
 all buffers / clients both now and in the future. When you turn diagnostics back on the 
 same applies.
 
-If you toggle off certain features, such as signs, this does not mean that it will turn 
-back on if you toggle all diagnostics to on. The 'global on' toggling is separate from
-the individual feature toggling. Turning all diagnostics off will turn all diagnostics off
-regardless of state. You cannot then individually turn on diagnostic features. You must 
-turn on all diagnostics and toggle off features.
+You can toggle ALL settings, at once, to either on or off by using the appropriate mapping or command.
+The `toggle-lsp-diag` mapping toggles ALL settings either on or off. It does NOT toggle back to a 
+previous state. So, if you toggle off underline, then turn ALL settings off, and then turn ALL settings
+back on again, the underline will re-appear. To get the settings back to the default you can use the 
+`toggle-lsp-diag-default` mapping or the `:ToggleDiagDefault` command.
 
 By default *all* of the features are turned on. This means that signs, underlining, virtual 
 text, and update in insert are turned on. This is contrary to the Neovim default which has
 update in insert turned off by default.
 
-You can change the settings by passing a configuration to the init() method (see the 'Configuration'
-section above).
+You can change the default settings by passing a configuration to the init() method (see the 
+'Configuration' section above).
 
 # Mappings
 The following mappings are available. 
@@ -76,6 +76,10 @@ Toggle updating diagnostic information while in insert mode.
 `<Plug>(toggle-lsp-diag)`
 Toggle all diagnostics. Turn them all off / on
 
+`<Plug>(toggle-lsp-diag-default)`
+Set all diagnostics to their default. The default is everything is on, unless other values were
+passed to init().
+
 `<Plug>(toggle-lsp-diag-on)`
 Turn all diagnostics on.
 
@@ -90,6 +94,7 @@ nmap <leader>tlv <Plug>(toggle-lsp-diag-vtext)
 nmap <leader>tlp <Plug>(toggle-lsp-diag-update_in_insert)
 
 nmap <leader>tld  <Plug>(toggle-lsp-diag)
+nmap <leader>tldd <Plug>(toggle-lsp-diag-default)
 nmap <leader>tldo <Plug>(toggle-lsp-diag-off)
 nmap <leader>tldf <Plug>(toggle-lsp-diag-on)
 ```
@@ -98,10 +103,13 @@ nmap <leader>tldf <Plug>(toggle-lsp-diag-on)
 The following commands are available:
 
 `:ToggleDiag`
-Toggle all diagnostics on/off
+Toggle ALL diagnostics on/off
+
+`:ToggleDiagDefault`
+Toggle ALL diagnostics to their default
 
 `:ToggleDiagOn`
-Turn ALL diagnostics on.
+Turn ALL diagnostics on
 
 `:ToggleDiagOff`
-Turn ALL diagnostics off.
+Turn ALL diagnostics off
