@@ -39,6 +39,11 @@ The above turns off underlining by default and configures the virtual text with 
 spaces prior to the virtual text being printed. The complete list of settings may be found in lsp help
 page. In particular, `:h set_virtual_text`, `:h set_underline`, `:h set_signs`, and `:h on_publish_diagnostics`.
 
+You can configure diagnostics so that they are off when you first start Neovim:
+```lua
+require'toggle_lsp_diagnostics'.init({ start_on = false }})
+```
+Simply toggle them back on when you want to see them.
 
 # Behavior
 The toggling is currently done globally. When you turn off all diagnostics you do so for

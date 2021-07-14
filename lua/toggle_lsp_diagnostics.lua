@@ -3,6 +3,7 @@ local diagnostic = require 'vim.lsp.diagnostic'
 local M = {
   settings = {
     all = true,
+    start_on = true,
     underline = { default = true },
     virtual_text = { default = true },
     signs = { default = true },
@@ -20,7 +21,11 @@ function M.init(user_settings)
     end
     M.settings[setting].value = M.settings[setting].default
   end
-  M.configure_diagnostics()
+  if user_settings['start_on'] ~= nil and not user_settings['start_on'] then
+    M.turn_off_diagnostics()
+  else
+    M.configure_diagnostics()
+  end
 end
 
 function M.current_settings(new_settings)
@@ -42,7 +47,6 @@ function M.turn_off_diagnostics()
     update_in_insert = false
   })
   M.settings.all = false
-  M.display_status('all diagnostics are', false)
 end
 
 function M.turn_on_diagnostics_default()
@@ -52,7 +56,7 @@ function M.turn_on_diagnostics_default()
   end
   M.configure_diagnostics(settings)
   M.settings.all = true
-  print('all diagnostics are at default')
+  vim.api.nvim_echo({ { 'all diagnostics are at default' } }, false, {})
 end
 
 function M.turn_on_diagnostics()
@@ -63,7 +67,6 @@ function M.turn_on_diagnostics()
     update_in_insert = true
   })
   M.settings.all = true
-  M.display_status('all diagnostics are', true)
 end
 
 function M.toggle_diagnostics()
@@ -72,6 +75,7 @@ function M.toggle_diagnostics()
   else
     M.turn_on_diagnostics()
   end
+  M.display_status('all diagnostics are', M.settings.all)
 end
 
 function M.toggle_diagnostic(name)
@@ -115,9 +119,9 @@ end
 
 function M.display_status(msg, val)
   if val == false then
-    print(string.format("%s off", msg))
+    vim.api.nvim_echo({ { string.format("%s off", msg) } }, false, {})
   else
-    print(string.format("%s on", msg))
+    vim.api.nvim_echo({ { string.format("%s on", msg) } }, false, {})
   end
 end
 
