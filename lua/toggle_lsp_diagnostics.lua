@@ -7,8 +7,8 @@ local M = {
     underline = { default = true },
     virtual_text = { default = true },
     signs = { default = true },
-    update_in_insert = { default = true }
-  }
+    update_in_insert = { default = true },
+  },
 }
 
 local SETTABLE = { 'underline', 'virtual_text', 'signs', 'update_in_insert' }
@@ -40,19 +40,19 @@ function M.current_settings(new_settings)
 end
 
 function M.turn_off_diagnostics()
-  M.configure_diagnostics({
+  M.configure_diagnostics {
     underline = false,
     virtual_text = false,
     signs = false,
-    update_in_insert = false
-  })
+    update_in_insert = false,
+  }
   M.settings.all = false
 end
 
 function M.turn_on_diagnostics_default()
   local settings = {}
   for _, setting in ipairs(SETTABLE) do
-   settings[setting] = M.settings[setting].default
+    settings[setting] = M.settings[setting].default
   end
   M.configure_diagnostics(settings)
   M.settings.all = true
@@ -60,12 +60,12 @@ function M.turn_on_diagnostics_default()
 end
 
 function M.turn_on_diagnostics()
-  M.configure_diagnostics({
+  M.configure_diagnostics {
     underline = true,
     virtual_text = true,
     signs = true,
-    update_in_insert = true
-  })
+    update_in_insert = true,
+  }
   M.settings.all = true
 end
 
@@ -87,27 +87,26 @@ function M.toggle_diagnostic(name)
     M.settings[name].value = false
   end
   M.display_status(name .. ' is', M.settings[name].value)
-  M.configure_diagnostics({ [name] = M.settings[name].value })
+  M.configure_diagnostics { [name] = M.settings[name].value }
   return M.settings[name].value
 end
 
 function M.toggle_underline()
-  M.toggle_diagnostic('underline')
+  M.toggle_diagnostic 'underline'
 end
 function M.toggle_signs()
-  M.toggle_diagnostic('signs')
+  M.toggle_diagnostic 'signs'
 end
 function M.toggle_virtual_text()
-  M.toggle_diagnostic('virtual_text')
+  M.toggle_diagnostic 'virtual_text'
 end
 function M.toggle_update_in_insert()
-  M.toggle_diagnostic('update_in_insert')
+  M.toggle_diagnostic 'update_in_insert'
 end
 
 function M.configure_diagnostics(settings)
   local conf = M.current_settings(settings or {})
-  vim.lsp.handlers["textDocument/publishDiagnostics"] =
-      vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, conf)
+  vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, conf)
   local clients = vim.lsp.get_active_clients()
   for client_id, _ in pairs(clients) do
     local buffers = vim.lsp.get_buffers_by_client_id(client_id)
@@ -119,9 +118,9 @@ end
 
 function M.display_status(msg, val)
   if val == false then
-    vim.api.nvim_echo({ { string.format("%s off", msg) } }, false, {})
+    vim.api.nvim_echo({ { string.format('%s off', msg) } }, false, {})
   else
-    vim.api.nvim_echo({ { string.format("%s on", msg) } }, false, {})
+    vim.api.nvim_echo({ { string.format('%s on', msg) } }, false, {})
   end
 end
 
