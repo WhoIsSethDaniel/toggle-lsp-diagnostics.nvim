@@ -12,9 +12,13 @@ local M = {
 do
   local ok, m = pcall(require, 'vim.diagnostic')
   if ok then
-    M.show = m.show
+    M.show = function(b, c, conf)
+      m.show(vim.lsp.diagnostic.get_namespace(c), b, nil, conf)
+    end
   else
-    M.show = require 'vim.lsp.diagnostic'.display
+    M.show = function(b, c, conf)
+      require('vim.lsp.diagnostic').display(b, c, conf)
+    end
   end
 end
 
@@ -118,7 +122,7 @@ function M.configure_diagnostics(settings)
   for client_id, _ in pairs(clients) do
     local buffers = vim.lsp.get_buffers_by_client_id(client_id)
     for _, buffer_id in ipairs(buffers) do
-      M.show(nil, buffer_id, client_id, conf)
+      M.show(buffer_id, client_id, conf)
     end
   end
 end
