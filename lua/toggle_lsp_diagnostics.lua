@@ -1,5 +1,3 @@
-local diagnostic = require 'vim.lsp.diagnostic'
-
 local M = {
   settings = {
     all = true,
@@ -10,6 +8,15 @@ local M = {
     update_in_insert = { default = true },
   },
 }
+
+do
+  local ok, m = pcall(require, 'vim.diagnostic')
+  if ok then
+    M.show = m.show
+  else
+    M.show = require 'vim.lsp.diagnostic'.display
+  end
+end
 
 local SETTABLE = { 'underline', 'virtual_text', 'signs', 'update_in_insert' }
 
@@ -111,7 +118,7 @@ function M.configure_diagnostics(settings)
   for client_id, _ in pairs(clients) do
     local buffers = vim.lsp.get_buffers_by_client_id(client_id)
     for _, buffer_id in ipairs(buffers) do
-      diagnostic.display(nil, buffer_id, client_id, conf)
+      M.show(nil, buffer_id, client_id, conf)
     end
   end
 end
