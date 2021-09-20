@@ -17,7 +17,7 @@ do
     end
   else
     M.show = function(b, c, conf)
-      require('vim.lsp.diagnostic').display(b, c, conf)
+      require('vim.lsp.diagnostic').display(nil, b, c, conf)
     end
   end
 end
