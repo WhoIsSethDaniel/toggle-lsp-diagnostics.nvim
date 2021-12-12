@@ -13,7 +13,9 @@ do
   local ok, m = pcall(require, 'vim.diagnostic')
   if ok then
     M.show = function(b, c, conf)
-      m.show(vim.lsp.diagnostic.get_namespace(c), b, nil, conf)
+      for ns,_ in pairs(vim.diagnostic.get_namespaces()) do
+        m.show(ns, b, nil, conf)
+      end
     end
   else
     M.show = function(b, c, conf)
