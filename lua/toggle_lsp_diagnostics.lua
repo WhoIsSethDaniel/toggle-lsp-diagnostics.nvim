@@ -13,7 +13,7 @@ do
   local ok, m = pcall(require, 'vim.diagnostic')
   if ok then
     M.show = function(b, c, conf)
-      for ns,_ in pairs(vim.diagnostic.get_namespaces()) do
+      for ns, _ in pairs(vim.diagnostic.get_namespaces()) do
         m.show(ns, b, nil, conf)
       end
     end
@@ -117,8 +117,8 @@ function M.toggle_update_in_insert()
   M.toggle_diagnostic 'update_in_insert'
 end
 
-function M.configure_diagnostics(settings)
-  local conf = M.current_settings(settings or {})
+-- for nvim 0.5 - 0.6.1
+local configure_diagnostics_05 = function(conf)
   vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, conf)
   local clients = vim.lsp.get_active_clients()
   for client_id, _ in pairs(clients) do
@@ -126,6 +126,20 @@ function M.configure_diagnostics(settings)
     for _, buffer_id in ipairs(buffers) do
       M.show(buffer_id, client_id, conf)
     end
+  end
+end
+
+-- for nvim 0.7 and beyond (may also work with 0.6.1 but can't test :()
+local configure_diagnostics_07 = function(conf)
+  vim.diagnostic.config(conf)
+end
+
+function M.configure_diagnostics(settings)
+  local conf = M.current_settings(settings or {})
+  if vim.fn.has 'nvim-0.7' then
+    configure_diagnostics_07(conf)
+  else
+    configure_diagnostics_05(conf)
   end
 end
 
