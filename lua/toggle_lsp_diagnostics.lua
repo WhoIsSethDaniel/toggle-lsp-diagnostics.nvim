@@ -2,12 +2,10 @@ local M = {
   settings = {
     all = true,
     start_on = true,
-    underline = { default = true },
-    virtual_text = { default = true },
-    signs = { default = true },
-    update_in_insert = { default = true },
   },
 }
+
+local SETTABLE = vim.tbl_keys(vim.diagnostic.config())
 
 do
   local ok, m = pcall(require, 'vim.diagnostic')
@@ -24,11 +22,10 @@ do
   end
 end
 
-local SETTABLE = { 'underline', 'virtual_text', 'signs', 'update_in_insert' }
-
 function M.init(user_settings)
   local user_settings = user_settings or {}
   for _, setting in ipairs(SETTABLE) do
+    M.settings[setting] = { default = true }
     if user_settings[setting] ~= nil then
       M.settings[setting].default = user_settings[setting]
     end
@@ -53,12 +50,11 @@ function M.current_settings(new_settings)
 end
 
 function M.turn_off_diagnostics()
-  M.configure_diagnostics {
-    underline = false,
-    virtual_text = false,
-    signs = false,
-    update_in_insert = false,
-  }
+  local settings = {}
+  for _, setting in ipairs(SETTABLE) do
+    settings[setting] = false
+  end
+  M.configure_diagnostics(settings)
   M.settings.all = false
 end
 
@@ -73,12 +69,11 @@ function M.turn_on_diagnostics_default()
 end
 
 function M.turn_on_diagnostics()
-  M.configure_diagnostics {
-    underline = true,
-    virtual_text = true,
-    signs = true,
-    update_in_insert = true,
-  }
+  local settings = {}
+  for _, setting in ipairs(SETTABLE) do
+    settings[setting] = true
+  end
+  M.configure_diagnostics(settings)
   M.settings.all = true
 end
 
