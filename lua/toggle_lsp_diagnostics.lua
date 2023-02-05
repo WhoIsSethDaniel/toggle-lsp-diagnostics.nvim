@@ -83,7 +83,7 @@ function M.toggle_diagnostics()
   else
     M.turn_on_diagnostics()
   end
-  M.display_status('all diagnostics are', M.settings.all)
+  M.display_status('All diagnostics are', M.settings.all)
 end
 
 function M.toggle_diagnostic(name)
@@ -140,9 +140,9 @@ end
 
 function M.display_status(msg, val)
   if val == false then
-    vim.api.nvim_echo({ { string.format('%s off', msg) } }, false, {})
+    vim.notify(string.format('%s off', msg), vim.log.levels.INFO)
   else
-    vim.api.nvim_echo({ { string.format('%s on', msg) } }, false, {})
+    vim.notify(string.format('%s on', msg), vim.log.levels.INFO)
   end
 end
 
