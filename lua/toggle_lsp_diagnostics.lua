@@ -81,7 +81,7 @@ function M.toggle_diagnostics()
   if M.settings.all then
     M.turn_off_diagnostics()
   else
-    M.turn_on_diagnostics()
+    M.turn_on_diagnostics_default()
   end
   M.display_status('All diagnostics are', M.settings.all)
 end
