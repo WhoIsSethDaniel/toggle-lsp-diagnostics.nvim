@@ -42,6 +42,14 @@ require'toggle_lsp_diagnostics'.init()
 EOF
 ```
 
+To preserve the current diagnostic configuration upon initializing this module you can do the following (assuming your
+Neovim is at least 0.7):
+
+```lua
+vim.diagnostic.config { ...some config... }
+require('toggle_lsp_diagnostics').init(vim.diagnostic.config())
+```
+
 You can pass an initial configuration for each of the diagnostic settings:
 
 ```lua
@@ -50,7 +58,7 @@ require('toggle_lsp_diagnostics').init { underline = false, virtual_text = { pre
 
 The above turns off underlining by default and configures the virtual text with a prefix of 'XXX' and five
 spaces prior to the virtual text being printed. The complete list of settings may be found in lsp help
-page. In particular, `:h set_virtual_text`, `:h set_underline`, `:h set_signs`, and `:h on_publish_diagnostics`.
+page.
 
 You can configure diagnostics so that they are off when you first start Neovim:
 
@@ -60,28 +68,11 @@ require'toggle_lsp_diagnostics'.init({ start_on = false }})
 
 Simply toggle them back on when you want to see them.
 
-To preserve the current diagnostic configuration upon initializing this module you can do the following (assuming your
-Neovim is at least 0.7):
-
-```lua
-require('toggle_lsp_diagnostics').init(vim.diagnostic.config())
-```
-
 ## Behavior
 
 The toggling is currently done globally. When you turn off all diagnostics you do so for
 all buffers / clients both now and in the future. When you turn diagnostics back on the
 same applies.
-
-You can toggle ALL settings, at once, to either on or off by using the appropriate mapping or command.
-The `toggle-lsp-diag` mapping toggles ALL settings either on or off. It does NOT toggle back to a
-previous state. So, if you toggle off underline, then turn ALL settings off, and then turn ALL settings
-back on again, the underline will re-appear. To get the settings back to the default you can use the
-`toggle-lsp-diag-default` mapping or the `:ToggleDiagDefault` command.
-
-By default _all_ of the features are turned on. This means that signs, underlining, virtual
-text, and update in insert are turned on. This is contrary to the Neovim default which has
-update in insert turned off by default.
 
 You can change the default settings by passing a configuration to the init() method (see the
 'Configuration' section above).
@@ -103,7 +94,7 @@ Toggle displaying virtual text in your code.
 Toggle updating diagnostic information while in insert mode.
 
 `<Plug>(toggle-lsp-diag)`
-Toggle all diagnostics. Turn them all off / on
+Toggle all diagnostics. Turn them all off / or back to what was passed to init().
 
 `<Plug>(toggle-lsp-diag-default)`
 Set all diagnostics to their default. The default is everything is on, unless other values were
