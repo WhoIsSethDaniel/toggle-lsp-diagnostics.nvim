@@ -65,7 +65,6 @@ function M.turn_on_diagnostics_default()
   end
   M.configure_diagnostics(settings)
   M.settings.all = true
-  vim.api.nvim_echo({ { 'all diagnostics are at default' } }, false, {})
 end
 
 function M.turn_on_diagnostics()
