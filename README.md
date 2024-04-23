@@ -63,7 +63,7 @@ page.
 You can configure diagnostics so that they are off when you first start Neovim:
 
 ```lua
-require'toggle_lsp_diagnostics'.init({ start_on = false }})
+require'toggle_lsp_diagnostics'.init({ start_on = false })
 ```
 
 Simply toggle them back on when you want to see them.
