@@ -1,3 +1,28 @@
+# ARCHIVED
+
+This plugin has been archived. There isn't much reason for this plugin anymore.
+Toggling the diagnostics for all buffers is made very simple by the current Lua
+API. e.g. what I currently use to toggle all diagnostics on/off is this:
+
+```lua
+map(
+  'n',
+  '<leader>td',
+  (function()
+    local diag_status = 1 -- 1 is show; 0 is hide
+    return function()
+      if diag_status == 1 then
+        diag_status = 0
+        vim.diagnostic.hide()
+      else
+        diag_status = 1
+        vim.diagnostic.show()
+      end
+    end
+  end)()
+)
+```
+
 # Description
 
 A Neovim plugin for toggling the LSP diagnostics. Turn all diagnostics on/off or turn on/off
@@ -63,7 +88,7 @@ page.
 You can configure diagnostics so that they are off when you first start Neovim:
 
 ```lua
-require'toggle_lsp_diagnostics'.init({ start_on = false })
+require('toggle_lsp_diagnostics').init { start_on = false }
 ```
 
 Simply toggle them back on when you want to see them.
