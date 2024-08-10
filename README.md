@@ -5,22 +5,9 @@ Toggling the diagnostics for all buffers is made very simple by the current Lua
 API. e.g. what I currently use to toggle all diagnostics on/off is this:
 
 ```lua
-map(
-  'n',
-  '<leader>td',
-  (function()
-    local diag_status = 1 -- 1 is show; 0 is hide
-    return function()
-      if diag_status == 1 then
-        diag_status = 0
-        vim.diagnostic.hide()
-      else
-        diag_status = 1
-        vim.diagnostic.show()
-      end
-    end
-  end)()
-)
+vim.keymap.set('n', '<leader>td', function()
+  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+end, { silent = true, noremap = true })
 ```
 
 # Description
